@@ -14,3 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/login','AuthController@login')->name('login');
+Route::post('/postlogin','AuthController@postlogin');
+Route::get('/logout','AuthController@logout');
+
+Route::group(['middleware' => ['auth','checkRole:admin']],function(){
+});
+
+Route::group(['middleware' => ['auth','checkRole:admin,siswa']],function(){
+    Route::get('/dashboard','DashboardController@index');
+});
